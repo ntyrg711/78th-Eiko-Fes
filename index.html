@@ -29,6 +29,9 @@
     const cover = document.querySelector('.cover');
     const intro = document.querySelector('.intro');
     const header = document.querySelector('header');
+    
+    const referrer = document.referrer; // 直前のページのURLを取得
+    console.log(referrer);
 
     let progress = 0; // 初期値
     let targetProgress = 0; // 実際の進捗
@@ -47,10 +50,8 @@
 
       if (aspectRatio > 1) {
         progressBar.style.height = `${progress / 10}vh`;
-        console.log(aspectRatio);
       } else {
         progressBar.style.height = `${progress / 6}vw`;
-        console.log(aspectRatio);
       }
     }
 
