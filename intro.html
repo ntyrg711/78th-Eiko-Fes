@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Eiko Fes Home</title>
+  </head>
+  <body>
+    <header style="display: none;">
+        <div class="header">
+          <p>Eiko Fes Home</p>
+        </div>
+    </header>
+    <div class="intro">
+      <div class="logo">
+        <img src="logo.png" class="logo-img">
+          <div class="progress"></div>
+          <div class="cover"></div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const progressBar = document.querySelector('.progress');
+    const cover = document.querySelector('.cover');
+    const intro = document.querySelector('.intro');
+    const header = document.querySelector('header');
+
+    let progress = 0; // 初期値
+    let targetProgress = 0; // 実際の進捗
+    let interval;
+
+    function getActualProgress() {
+      if (document.readyState === 'complete') return 100;
+      if (document.readyState === 'interactive') return 50;
+      return 10;
+    }
+
+    function updateProgressBar() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const aspectRatio = width / height;
+
+      if (aspectRatio > 1) {
+        progressBar.style.height = `${progress / 10}vh`;
+        console.log(aspectRatio);
+      } else {
+        progressBar.style.height = `${progress / 6}vw`;
+        console.log(aspectRatio);
+      }
+    }
+
+    function slowIncrease() {
+      if (progress < targetProgress) {
+        progress += 10;
+        updateProgressBar(); // ここで progressBar の高さを更新
+      }
+
+      if (progress >= 20 && cover.style.opacity !== '0') {
+        setTimeout(() => {
+          cover.style.opacity = '0';
+        }, 375);
+      }
+
+      if (progress >= 100) {
+        clearInterval(interval); // 100% でストップ
+      }
+    }
+
+    function updateProgress() {
+      targetProgress = getActualProgress();
+    }
+
+    interval = setInterval(slowIncrease, 100); // 100msごとに15%ずつ増加
+
+    document.onreadystatechange = updateProgress;
+    updateProgress(); // 初回実行
+
+    intro.addEventListener('animationend', () => {
+      intro.style.display = 'none';
+      header.style.display = 'block';
+    });
+  });
+</script>
