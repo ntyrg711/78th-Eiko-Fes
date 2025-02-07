@@ -32,6 +32,11 @@
     
     const referrer = document.referrer; // 直前のページのURLを取得
     console.log(referrer);
+    //ここでアニメーションを実行しないURLの指定
+    if (referrer.includes("78th-Eiko-Fes")) {
+      intro.style.display = "none";
+      return;
+    }
 
     let progress = 0; // 初期値
     let targetProgress = 0; // 実際の進捗
@@ -43,6 +48,7 @@
       return 10;
     }
 
+    //アスペクト比によってプログレスバーの高さを変更
     function updateProgressBar() {
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -58,7 +64,7 @@
     function slowIncrease() {
       if (progress < targetProgress) {
         progress += 10;
-        updateProgressBar(); // ここで progressBar の高さを更新
+        updateProgressBar();
       }
 
       if (progress >= 20 && cover.style.opacity !== '0') {
@@ -79,7 +85,7 @@
     interval = setInterval(slowIncrease, 100); // 100msごとに15%ずつ増加
 
     document.onreadystatechange = updateProgress;
-    updateProgress(); // 初回実行
+    updateProgress();
 
     intro.addEventListener('animationend', () => {
       intro.style.display = 'none';
