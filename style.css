@@ -27,6 +27,7 @@ body {
     background: black;
     animation: slide-out-container 2s cubic-bezier(1,.01,.58,1) 1.3s;
     animation-fill-mode: forwards;
+    position: fixed; /* 画面上に固定 */
 }
 
 .logo {
@@ -123,4 +124,10 @@ body {
         z-index: 4;
         transition: opacity 2s ease-out;
     }
+}
+
+.main-img {
+    width: 100vw;
+    height: auto;
+    z-index: 0;
 }
